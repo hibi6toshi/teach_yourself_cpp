@@ -40,3 +40,27 @@ double e = 2.71828182846; // 何もつけないただの実数はdouble型の値
 また、関節参照演算子をによりポインターを経由して変数にアクセスすることを**関節参照(dereference)**と呼びます。
 
 ポインターは関数の引数に使うことで、引数で渡した変数を関数内部から変更することができます。このように関数の引数としてポインターを渡すことを**ポインター渡し(call by pointer)**と呼びます。
+
+## const ポインター
+const 変数を指し示すためのポインターとしてベットconst ポインターが存在する。通常のポインター変数にはconst 変数のアドレスは代入できないようになっている。
+
+```
+const type-name* variable-name;
+
+type-name const* variable-name;
+```
+
+const ポインターは指し示す先の変数が変更可能であることを表しており、const ポインター自体が変更できないわけではありません。
+
+```
+const int a = 42;
+const int b = 0;
+
+const int* ptr = &a; // constポインターを格納するポインター変数ptr
+ptr = &b; // ポインター変数自体はconst ではないので、後から代入できる。
+```
+
+ポインター自体をconst にしたい場合は、const 修飾子をつける場所が異なる。
+```
+type-name* const variable-name = initial-address;
+```

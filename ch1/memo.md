@@ -43,3 +43,24 @@ type-name const variable-name = initial-value;
 ```
 
 const 変数は後から代入できないため、const変数は初期化を省略するとエラーになります。
+
+## 関数
+関数の定義
+
+```
+return-type function-name() {
+  fuction-body
+}
+
+return-type function-name(parameter-type1 parameter-type1){
+  function-body
+}
+
+return-type function-name(parameter-type1 parameter-name1, parameter-type2 parameter-name2){
+  function-body
+}
+```
+
+関数が戻り値を何も返さない場合は、戻り値の型として`void` という型を指定する。
+
+プログラムが実行されるとまず、main()関数がシステムから呼ばれます。
