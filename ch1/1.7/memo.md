@@ -10,3 +10,21 @@ while (condition) {
 
 ## break文とcontinue文
 
+## for文
+
+```
+for (initializer-expression; condition; post-iteration-expression){
+ statements...;
+}
+```
+
+for文をwhile文を使って表現するとこうなる。
+```
+initializer-expression;
+while (condition) {
+  statements...;
+
+  post-iteration-expression;
+}
+```
+for文はいかなる場合でも post-iteration-expressionが実行される。
