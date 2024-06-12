@@ -28,3 +28,20 @@ while (condition) {
 }
 ```
 for文はいかなる場合でも post-iteration-expressionが実行される。
+
+## 範囲for文
+```
+for (type variable : range) {
+  statements...;
+}
+```
+ 
+範囲for文を通常のfor文で書き直すと、以下のようになる。
+```
+for(int i = 0; i < length-of-range; i++) {
+  type varialbe = range[i];
+  statements...;
+}
+```
+コンパイラは配列の長さを知っているので、その長さを自動的に使って走査します。
+ただし、今扱っているのが何番目の要素かを知る方法はありません。
