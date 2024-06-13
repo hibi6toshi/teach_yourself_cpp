@@ -48,3 +48,34 @@ union union-type {
 };
 ```
 初期化は先頭のメンバー変数のみが初期化できる。
+
+## 列挙体(enumeration)
+列挙体は、構造体や共用体とは少し異なり、メンバー変数を持たない。「列挙体が取りうる値を列挙しておき、そのうちのいずれかの値を持っている。」変数を作るための型です。
+
+```
+enum class enum-name {
+  enumerator1,
+  enumerator2 = value,
+  ...
+};
+```
+列挙体は取りうる値をカンマ区切りで列挙するだけで宣言できますが、その場合、それぞれの値には具体的な整数値が0から順番に割り当てられます。
+
+列挙体名と列挙値をスコープ解決演算子(:: scope resolution operator) で繋げるとその値を使うことができます。
+```
+enum-name::enumerator;
+```
+
+列挙体で扱える整数の範囲を指定する方法がある。
+```
+enum class enum-name : underlying-type {
+  enumeration1,
+  enumeration2 = value,
+  ...
+}
+```
+
+underlying-type にはenumで扱うベースとなる整数型を指定します。 組み込みの整数型のみ指定ができます。
+特にchar は1バイトであることが決まっているので、1バイトのenumを作りたいときはchar型をベースにしたenumを作ると良い。
+
+
