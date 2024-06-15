@@ -28,3 +28,26 @@ class class-name {
 ```
 
 クラス外から、飛行愛となっているメンバー変数やメンバー関数にアクセスしようとすると、コンパイルエラーになります。
+
+## メンバー関数
+メンバー関数はそれ単体で使うことはできず、常に関連づけられたクラスのインスタンスと組み合わせて使う関数です。
+
+```
+class class-name {
+  // メンバー関数の宣言
+  return-type member-function-name(parameters...);
+}
+
+// メンバー関数の定義
+return-type class-name::member-function-name(parameters...) {
+  fuctino-body...;
+}
+```
+
+// インスタンスを使ったメンバー関数呼び出し
+instance.member-function-name(arguments...);
+
+// インスタンスのポインター経由でのメンバー関数呼び出し
+instance->member-function-name(arguments...);
+
+クラスさえ同じなら、異なるインスタンスの非公開メンバーにもアクセスできるらしい。。。
