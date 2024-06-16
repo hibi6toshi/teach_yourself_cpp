@@ -24,3 +24,52 @@ int main() {
   // エラー 例え内容が全く同じでも別の方を持つ
   decltype(a) b = []() -> int { return 42; };
 }
+```
+
+## 戻り値の型の省略
+ほとんどの場合、ラムダ式では戻り値の型を省略することができます。その際、コンパイラーがラムダ式の中身から戻り値の型を推論します。ラムダ式がreturn文を使って何か戻り値を返した場合には、その戻り値から型を推論し、「reutrnがない」もしくは「戻り値のないreturnである」場合にはvoidに推論します。
+```C++
+int main() {
+  auto return_void = []() { // []() -> void { と同じ
+    std::cout << "何も返さないラムダ式" << std::endl;
+  };
+
+  auto return_int = []{} -> { // []() -> int {　と同じ 
+    return 42;
+  };
+}
+```
+
+ただし、この推論も常位行こうというわけではない。複数のreturn文があり、1つでも型が異なるreturn 文があった場合にはエラーになります。
+```C++
+int main() {
+  // エラー returnの型が全て同じではない
+  auto rectified_linear_unit = [](float x) {
+    if (0 <= x) {
+      return 0; // int 型
+    }
+
+    return x; // float 型
+  };
+}
+```
+
+こういった場合にはreturn文の型を合わせるか、戻り値の型を明記して暗黙の型変換をさせる必要があります。
+```C++
+int main() {
+  auto rectified_linear_unit1 = [](float x) {
+    if (0 <= x) {
+      return 0.0f; // float型
+    }
+    return x; // float型
+  };
+
+  auto rectified_linear_unit2 = [](float x) -> float { // OK
+    if (0 <= x) {
+      return 0; // int -> floatへの暗黙的型変換が行われる。
+    }
+
+    return x; // float型
+  } 
+}
+```
