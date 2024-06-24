@@ -21,3 +21,11 @@ if (type-name variable-name = expr; condition) {
   }
 }
 ```
+
+## 初期化構文付きswitch文
+初期化構文付きswitch文が存在する。
+```C++
+switch(type-name variable-name = expr; condition) {
+  switch-stmt-body...
+}
+```
