@@ -44,3 +44,33 @@ namespace-name::function-name(); // 関数呼び出し
 namespace-name::variable-name; // 変数の使用
 ```
 
+## 4.7.2 ネストした名前空間
+名前空間はその中にさらに名前空間を持つことができます。このようなネストした名前空間を使うと、ライブラリの中でさらに機能ごとに分けたり、ユーザーに公開する日つおようのない内部実装用の機能をまとめたりして、必要な機能だけを整理して提供できます。
+
+```C++
+namespace library {
+  namespace module {
+    namespace detail {
+      void internal_function();
+    }
+  }
+}
+
+int main() {
+  // ネストした名前空間の内側の関数呼び出し
+  library::module::detail::internal_function();
+}
+```
+
+ネストが深くなると上記のように{}が多くなってしまい、管理が煩雑になります。そこで、名前空間の中に名前空間しかない単純な場合に限り、省略した方法でネストした名前空間を定義できます。
+```C++
+namespace toplevel-namespace-name::nested-namespace-name {
+  ...
+}
+
+// 何弾もかける
+namespace top-level::midle-name::last_level {
+  ...
+}
+```
+
