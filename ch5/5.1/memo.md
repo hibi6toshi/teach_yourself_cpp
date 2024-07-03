@@ -27,3 +27,34 @@ int main() {
 }
 ```
 
+## 5.1.4 配列の型と別名
+配列はポインターに暗黙的に変換できますが、配列自体はポインター型ではなく「配列の型」というものを持っています。ただし、配列へのポインター型や配列への参照型は、普通のポインター型や参照型の宣言とは表記方法が大きく異なるので注意が必要です。
+
+```C++: 配列の型・ポインターと参照　
+type-name[artrau-length] // 配列の型
+
+type-name (*)[array-length] // 配列へのポインター型
+
+type-name (*pointer-name)[array-length] = & array-name; // 配列へのポインターの宣言
+
+type-name (&)[array-length] // 配列への参照型
+
+type-name (& reference-name)[array-length] = array-name; // 配列への参照の宣言
+```
+
+配列へのポインターや参照はかっこがあり少々使いづらいので、必要となった場合には型に別名を与えると良い。
+```C++
+using int_array = int[5];
+
+int_array array; // 長さ5のint型の配列
+
+int_array* aptr = &array; // 長さ5のint型の配列への参照
+
+using int_array_pointer = int (*)[5];
+
+int_array_pointer ptr = &array; // 長さ5のint型の配列へのポインター
+
+using int_array_reference = int (&)[5];
+
+int_array_reference ref = array; // 長さ5のint型の配列への参照
+```
