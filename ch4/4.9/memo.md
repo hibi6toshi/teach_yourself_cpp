@@ -71,3 +71,38 @@
 #define macro-name(macro-parameter-name, macro-parameter-name...) macro-replacement
 ```
 関数マクロも、置き換える文字列を省略することができます。
+
+## 4.9.3 結合と展開
+## \##演算子
+マクロは展開中に指定されたトークン列に置き換えますが、常に空白で区切るので、そのままではトークンとトークンをつなげた新しいトークンを作ることはできません。
+```C++
+#define concatenate(left, right) left right
+concatenate(foo, bar) // => 「foo bar」に置き換わる
+
+#define concatenate(laft, right) liftright
+concatenate(foo, bar) // => 「leftright」に置き換わる
+// leftright に変わる。　foobarではない。　文字列的な扱いになってしまっている。
+```
+
+トークン列を結合したものに置き換えるには、**##演算子**を使います。##演算子はマクロ定義の中でのみ有効な演算子で、前後のトークンを結合したトークンに置き換えます。
+```C++
+#define concatenate(left, right) left ## right
+concatenate(foo, bar) // => 「foobar」 に置き変わる
+```
+
+## #演算子
+マクロはトークンを別のトークン列に置き換えますが、幕と定義の中に書かれた("" で囲まれた)文字列は置き換えの対象になりません。
+```C++
+#define stringize(value) "value"
+stringize(hoge) // 「"value"」 に置き換わる
+```
+
+文字列の中もマクロの置き換え対象とならないので、そのままではマクロ展開した結果を文字列にすることができません。
+マクロ展開でトークン列を文字列に置き換えたい場合には、**#演算子**を使います。#演算子の直後にあるトークン1つが文字列として展開されます。
+```C++
+#defie stringize(value) #value
+stringize(hoge) // => 「"hoge"」 に置き換わる
+
+// #演算子の直後のトークン、secondだけが文字列になる
+#define complex_macro(first, second, third) first # second third
+complex_macro(hoge, fuga, piyo) // => 「hoge "fuga" piyo」に置き換わる
