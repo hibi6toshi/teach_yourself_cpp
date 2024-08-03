@@ -16,3 +16,52 @@ public:
   }
 };
 ```
+
+## 5.10.2 thisポインターのキャプチャ
+一方、メンバー関数の中で使え特別なポインターthisをコピーキャプチャすることは可能です。
+thisをコピーでキャプチャすることによって、ラムダ式の内部でメンバーにアクセスすることができるようになります。
+
+```C++
+class C {
+  int a;
+
+public:
+  void show_a() {
+    [this]() { // OK メンバー変数ではなく、thisポインターをキャプチャ
+      // OK this->a と同じ意味になる。
+      std::cout << "C::a = " << a << std::endl;
+    }();
+  }
+};
+```
+
+ここで注意するのは、キャプチャしているのはthisポインターだけだということです。
+thisをmutable指定していないラムダ式でコピーしたとしても、thisポインターのサス先は変更可能なままです。
+```C++
+class D {
+  int a;
+
+public:
+  void set_a(int value) {
+    [this, value]() { // mutable指定していない
+      a = value; // ok. this->a = value; と同じ意味で aにvalueを代入
+    }();
+  }
+};
+```
+
+コピーしているのはthisポインターなので、ラムダ式を定義しているメンバー関数それ自体がconst指定されている場合には、その内部のラムダ式のthisもconst指定されたものとなります。
+
+```C++
+class E {
+  int a; 
+
+public:
+  void set_a(int value) const { /// const指定をする。
+    [this, value]() mutable { // 例えラムダ式にmutable指定をしたとしても
+      // エラー　コピーしたthisポインターの型はconst E* なので、変更はできない。
+      a = value;
+    }();
+  }
+};
+```
