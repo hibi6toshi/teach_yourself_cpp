@@ -30,3 +30,29 @@ return-type (&variable-name)(parameters...) = function-name;
 
 ポインターから参照に変わったときと同じく、*から&へと変わっていますが、戻り値の型や引数の型、数が一致しなければならないことは関数ポインターと同じ。
 
+## 5.9.3 高階関数
+関数ポインターや関数リファレンスを引数に持っていたり、戻り値として返す関数を**高階関数**といいます。高階関数は関数の動作をカスタマイズするために使われます。
+
+関数ポインターや関数リファレンスも配列のときと同じく括弧があり扱いづらいので、別名を用意して使うのが良いでしょう。
+
+```C++
+using predicate = bool (int); // 関数型の別名
+
+predicate* fptr = &is_odd; // 関数ポインター
+
+predicate& fref = is_odd; // 関数リファレンス
+
+using predicate_ptr = bool (*)(int); // 関数ポインター型の別名
+
+predicate_ptr ptr = &is_less_than_5; // 関数ポインター
+
+using predicate_ref = bool (&)(int); // 関数リファレンス型の別名
+
+predicate_ref ref = is_less_than_5; // 関数リファレンス
+```
+
+特に関数へのポインターや参照を返す高階関数は、配列のポインターや参照を返す関数と同じく戻り値の方が非常に複雑になるため別名を使うべきです。
+```C++
+// int (float)型の関数へのポインターを返す関数
+int (*function(int a, int b))(float) {}
+```
