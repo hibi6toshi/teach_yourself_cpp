@@ -17,3 +17,31 @@ std::ostream& seekp(std::ios::pos_type position);
 
 seekg()メンバー関数は入出力ストリームの位置を変更し、seekp()メンバー関数は出力ストリームの位置を変更します。自由な位置に移動することを**シーク** といい、入力はgetの頭文字、出力はputの頭文字を組み合わせた名前になっています。
 std::ios::pos_type型は標準ライブラリが定義する何かしらの整数型で、移動したいファイルの先頭からの絶対位置をバイト数で与えます。
+
+## 8.7.2 現在の位置を知る
+現在の入力ストリームの先頭からの位置を調べるにはtellg()メンバー関数を、出力ストリームの先頭からの位置を調べるにはtellp()メンバー関数を使用します。
+```C++
+// tellg() と tellp()
+std::ios::pos_type tellg() const;
+
+std::ios::pos_type tellp() const;
+```
+
+現在の位置からの相対位置にシークするには、tellg()メンバー関数やtellp()メンバー関数で取得できる現在位置に、移動したい分か減産すれば目的の位置になります。
+このときか減産するにはstd::streamoff型を使う必要がありますが、これは整数型からキャストが可能となっています。
+
+相対位置でのシークはこれ以外にも方法があります。
+```C++
+// seekg() と　seekp()
+std::istream& seekg(std::ios::off_type offset, std::ios::seekdir origin);
+
+std::ostream& seekp(std::ios::off_type offset, std::ios::seekdir origin);
+```
+これらのオーバーロードは相対いちの基準となる場所（origin）とそこからの相対位置（offset）を指定する方法で自由な位置にシークします。
+ofiginに指定できる値は以下の定数です。
+
+| 定数 | 意味 |
+| --- | --- |
+| std::ios::beg | ファイルの先頭 |
+| std::ios::cur | 現在の位置 |
+| std::ios::end | ファイルの最後 |
