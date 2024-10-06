@@ -17,3 +17,22 @@ template <template-parameter1, template-parameter2...>
 using alias-name = template-expression;
 ```
 
+## 9.8.3 template限定子
+template限定子は、依存名がテンプレートであったときに必要になるtemplateキーワードの用法です。依存名が型名かどうかでtypenameが必要となりましたが、template限定子は依存名がクラステンプレートなのか関数テンプレートなのかに関わらず必要となります。
+
+```C++
+// 依存名が関数テンプレートのときの関数呼び出し
+dependent-name.template member-name<template-parameters...>(parameters...)
+
+// 上記同様にアロー演算子を使った関数テンプレートの呼び出し
+dependent-name->template member-name<template-parameters...>(parameters...)
+
+// 依存名が関数テンプレートなstaticメンバー関数の呼び出し
+dependent-name::template member-name<template-parameters...>(parameters...)
+
+// 依存名がテンプレートクラスでクラステンプレートやエイリアス、その他staticメンバー変数等のとき
+dependent-name::template memter-name<template-parameters...>
+```
+
+いずれの場合でもメンバー名の前に**template**キーワードをつけてメンバー関数の呼び出しや、ホストした型名の取得をします。
+
