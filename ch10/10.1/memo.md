@@ -24,3 +24,22 @@ throw exception-object;
 例外が発生した段階で、処理は直ちにその例外を捕まえることができるcatch節に移ります。
 投げられた例外オブジェクトの寿命はcatch節の最後までとなっていて、catch節の処理が正常に終了すると自動的にデストラクターが呼ばれます。
 
+## 10.1.2 複数のcatch節
+1つのtryブロックに対していくつでもcatch節を書くことができる。
+```C++
+try {
+  statement...
+} catch (type0 variable0) {
+  statement...
+} catch (type1 variable1) {
+  statement...
+} .... {
+  ...
+} catch (typeN variableN) {
+  statement...
+}
+```
+
+複数のcatch節を書いた場合、上から順番に捕まえられるかを判定して、最初に捕まえたことができたcatch節の処理のみが行われます。一致する全てのcatch節や、最小に捕まえたところ以降のcatch節が実行されるわけではありません。
+
+なお、main関数まで遡って全てのcatch節を調べたのにもかかわらず、どのcatch節も捕まえることができなかった場合、デフォルトではstd::terminate()関数が呼ばれます。この関数は通常プログラムを強制終了します。
