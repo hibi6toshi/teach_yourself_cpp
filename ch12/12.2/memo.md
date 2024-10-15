@@ -102,3 +102,34 @@ std::vector<T>が破棄されるとき、格納されていた要素も全て破
   // delete[]されないのでメモリリークとなる
 }
 ```
+
+## 12.2.2. 代入
+std::vectorへの代入は、代入演算子を用いる方法とassign()メンバー関数を用いる方法とがあります。
+
+**代入演算子**
+代入演算子によって代入できるのは、(テンプレート引数も含めて)同じ型のコンテナ、もしくはstd::initializer_list<T>です。
+```C++
+  std::vector v0 = { 0, 2, 4, 6, 8};
+
+  v0 = { 2, 3, 5 }; // std::initializer_list<int>からの代入
+```
+
+**assign()メンバー関数**
+assign()メンバー関数を使うと
+- イテレーターの組
+- 任意個数の複数要素
+- std::initializer_list<T>
+
+による要素の差し替えが可能です。
+
+std::vector<T>で、assign()メンバー関数は以下のように定義されています。
+これらはコンストラクターで渡せるものと同じものを受け取るようになっています。
+```C++
+// assign()メンバー関数
+temlate<typename Iterator>
+void assign(Iterator first, Iterator last);
+
+void assign(size_type n, const T& u);
+
+void assign(std::itnializer_list<T> il);
+```
