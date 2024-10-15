@@ -172,3 +172,20 @@ reverse_iterator rbegin();
 
 reverse_iterator rend();
 ```
+## 12.2.4 要素の挿入
+**insert()を使った挿入**
+コンテナの任意の場所への要素の挿入はinsert()メンバー関数で行い、第一引数に挿入する位置を指すイテレーターを与えます。
+```C++
+iterator insert(const_iterator pos, const T& value);
+```
+
+第一引数で指定されたイテレーターの場所に挿入され、元々そのイテレーターが指していた先にあった要素は挿入された要素の次となります。
+
+**emplace()を使った挿入**
+特殊な挿入としてemplace()メンバー関数が用意されています。
+```C++
+template <typename... T>
+iterator emplace(const_iterator pos, T&&... args);
+```
+
+insert()メンバー関数は第2引数以降で与えられた要素のコピーをコンテナ内に挿入するのに対し、emplace()メンバー関数は第2引数以降を要素のコンストラクター引数として用い、コピーを作らずコンテナ内に直接生成します。
