@@ -133,3 +133,42 @@ void assign(size_type n, const T& u);
 
 void assign(std::itnializer_list<T> il);
 ```
+
+## 12.2.3 要素へのアクセス
+**添字演算子によるアクセス**
+std::vectorは通常の配列と同じ操作で扱えるクラスであり、添字演算子を持っています。
+```C++
+std::vector iv = { 0, 1, 2, 3, 4 };
+
+iv[2] = 10; // OK
+```
+
+**イテレーターによるアクセス**
+コンテナ内の各要素にはイテレーターをつかてアクセスでき、その際、要素の値はポインターと同様に関節参照演算子を使って取得できます。
+例えば、begin()メンバー関数とend()メンバー関数は、それぞれ「先頭要素」と「末尾要素の次」を指すため、範囲[begin(), end())がコンテナ内の全要素となります。
+
+```C++
+// begin()/end()メンバー関数
+iterator begin()
+
+iterator end();
+```
+
+**const_iterator**
+コンテナがconstで会ったとき、begin()/end()メンバー関数は要素の書き換えができないstd::vector<T>::const_iteratorを返します。
+```C++
+const std::vector v = { 0, 1, 2, 3 ,4 };
+
+*v.begin() = -1; // コンパイルエラー
+int first_value = *v.begin(); // OK
+```
+また、cbegin()/cendメンバー関数は、コンテナがconstであるか否かに関わらず、std::vector<T>>::coust_iteratorを返します。
+
+**逆順のイテレーター**
+begin()/end()、cbegin()/cend()メンバー関数が返すイテレーターは、インクリメント(++)したときにコンテナ内を先頭から末尾に向かって進みます。
+一方、rbegin()/rend、crbegin()/crend()メンバー関数は末尾から先頭に向かって進みます。
+```C++
+reverse_iterator rbegin();
+
+reverse_iterator rend();
+```
