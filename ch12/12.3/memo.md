@@ -29,3 +29,19 @@ Iterator std::prev(Iterator it, integer-type n = 1);
 - std::next()関数では進めて
 - std::prev()関数では戻して
 戻り値として返します。std::advance()関数と異なり、第1引数として渡したイテレーター自体は変更されません。
+
+## 12.3.2 std::listの特徴
+std::listでは格要素が（順方向と逆方向）双方向リンクで1本の鎖を構成し、要素の挿入・削除や順序の入れ替えをリンク（ポインター）の張り替えで実現しているため、std::vectorではできなかった様々な操作がメンバー関数として定義されています。
+
+**要素の挿入・削除**
+まず、末尾要素の挿入・削除うを行うpush_back()メンバー関数、emplace_back()メンバー関数、pop_buck()メンバー関数に加え、push_front()メンバー関数、emplace_front()メンバー関数、pop_front()メンバー関数で先頭要素の挿入・削除が行えます。
+```C++
+void push_front(const T& value);
+
+template <typename... T>
+void emplace_front(T&&... args);
+
+void pop_front();
+```
+
+std:listに対する要素の追加・削除の際には、std::vectorとは異なりイテレーターが無効となりません。
