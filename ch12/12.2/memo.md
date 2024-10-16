@@ -206,3 +206,7 @@ iterator erase(const_iterator first, const_iterator last);
 ```C++
 void clear();
 ```
+
+## 12.2.6 要素数の取得
+コンテナ内の要素数は、size()メンバー関数を使って得られます。
+また、empty()メンバー関数はコンテナが空、つまりsize() == 0 のときにtrueを返します。
