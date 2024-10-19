@@ -61,3 +61,19 @@ void splice(const_iterator pos, std:list<T>& other, const_iterator first, const_
 1つ目のオーバーロードはotherで指定されたstd::listの全ての要素をposで指定した場所に移動します。
 2つ目はitで指定された要素のみを、3つ目ではfirstとlastで指定された範囲の要素全部を移動します。
 
+**ソート**
+std::vectorでは、標準アルゴリズムを使ってソートを行います。
+しかし、標準アルゴリズムはランダムアクセスイテレーターを要求していてstd::listでは使うことができないので、std::list自体がソートのためのsort()メンバー関数と、ソートされた2つのstd::listを併合するmerge()メンバー関数を持っています。
+```C++
+void sort();
+
+template <typename Compare>
+void sort(Compare comp);
+
+void merge(list& other);
+
+template <typename Compare>
+void merge(std::list<T>& other, Compare comp);
+```
+
+sort()メンバー関数もmerge()メンバー関数も、通常は小なりの比較演算子（<）を使って照準に並べますが、それ以外の並べ方をしたい場合には、要素の比較をするための関数を第2引数に渡すことで、好きな順番で並べることができます。
