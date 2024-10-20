@@ -77,3 +77,18 @@ std::map<std::string, int> m = {
 
 m["first"] == 1; // true
 ```
+
+## 12.5.3 std::multisetとstd::multimap
+要素が昇順に並んでいるものの、std::setとは少し異なり「要素の重複」を許すコンテナstd::multisetも、ヘッダー<set>に定義されています。std::multisetの使い方は基本的にstd::setと同じです。
+
+find()メンバー関数も使えますが、これが返すイテレーターは最初に見つけた要素へのイテレーターとなります。しかし、実際には同じ要素を全て取得したいという場合が多くあります。find()メンバー関数だけでは最初の要素しかわからないので少々使いづらいです。
+equal_range()メンバー関数を使うと、重複している要素の範囲を返すので簡単に列挙できます。
+```C++
+std::pair<iterator, iterator> equal_range(const Key& key);
+
+std::pair<const_iterator, const_iterator> equal_range(const Key& key) const;
+```
+
+std::multimapもstd::multiset同様にstd::mapが要素の重複を許すようになったコンテナです。こちらもほとんど同様に扱うことができますが、std::multimapはstd::mapでできた添字演算子での要素アクセスができなくなっています。(重複しているのでその要素を返せば良いかがわからないため)。
+重複した要素どうしの並び順は、挿入した順番になるようになっています。これはstd::multisetでもそのようになっているのですが、std::multimapを使用する時には特に重要な性質となります。
+std::multimapでもequal_range()メンバー関数が提供されており、std::multisetのそれと全く同じように使えます。
