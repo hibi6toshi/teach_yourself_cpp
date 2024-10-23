@@ -61,3 +61,18 @@ template <typename InputIterator, typename OutputIterator, typename P>
 OutputIterator copy_if(InputIterator first, InputIterator last, OutputIterator out, P predicate);
 ```
 std::copy()関数は無条件にコピーをしますが、std::copy_if()関数はpredicateがtrueを返す場合のみコピーします。なお、コピー先のコンテナはあらかじめコピーするのに十分な数領域が確保されている必要があります。
+
+## 12.6.4 コンテナに変更を加える特別なイテレーター
+copyアルゴリズムのように他のコンテナに結果を出力していくアルゴリズムは、あらかじめ出力先のコンテナの領域を確保しておく必要がありました。あらかじめ結果の長さがわかっている場合にはうまくいきますが、std::copy_if()関数のように実行してみないと結果がどうなるかわからない場合には、無駄な領域を確保してしまうことになります。また、出力先のコンテナに上書きしていくので、途中に挿入して欲しい場合であったも、元の値が上書きされてしまいます。
+標準ライブラリは<iterator>ヘッダーで特別なイテレーターを提供していて、そういった状況に対応させることができます。
+
+```C++
+template <typename Container>
+std::insert_iterator<Container> inserter(Container& c, typename Container::iterator i);
+
+template <typename Container>
+std::back_insert_iterator<Container> back_inserter(Container& c);
+
+template <typename Container>
+std::front_insert_iterator<Container> front_inserter(Container& c);
+```
