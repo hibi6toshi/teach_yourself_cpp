@@ -30,3 +30,34 @@ integer-type count(InputIterator first, InputIterator last, const T7 value);
 template <typename InputIterator, typename P>
 integer-type count_if(InputIterator first, InputIterator last, P predicate);
 ```
+
+## 12.6.3 コンテナに変更を加えるアルゴリズム
+コンテナに変更を加えるアルゴリズムには、2通りの変更の加え方があります。
+1.インプレース(inplace)にコンテナを上書きする
+2.処理した結果を別のコンテナに書き込んでいく
+
+それぞれ代表的なものとしてはsortアルゴリズムとcopyアルゴリズムがあります。
+ソートアルゴリズムは直接コンテナの中身を書き換えていくインプレースなアルゴリズムで、与えられたコンテナの範囲を並び替えます。
+```C++
+template <typename RandomIterator>
+void sort(RandomIterator first, RandoiomIterator last);
+
+
+template <typename RandomIterator, typename Compare>
+void sort(RandomIterator first, RandomIterator last, Compare comp);
+```
+
+sortアルゴリズムを使うためには、イテレーターがランダムアクセスイテレーターでなければなりません。そのため、std::listはsortアルゴリズムを使うことができませんが、std::listにはsort()メンバー関数を持っているのでそちらを使います。
+イテレーターのペアのみを受け取るstd::sort関数は、要素間の大小を比較演算子の小なり（<）を使って比較し昇順になるように並べ替えます。
+第3引数をとるstd::sort()関数は、第3引数で渡した関数オブジェクトを使って大小を比較します。例えばここで<の代わりに>を使う関数オブジェクトを渡すことで、std::sort()関数は降順に並べ替えます。
+このとき渡すオブジェクトは**厳密で弱い順序**という条件を満たさなければなりません。
+
+copyアルゴリズムは入力イテレーターの値を出力イテレーターにコピーしていくアルゴリズムです。全ての入力をコピーし終わると、最後にコピーされた要素の次のイテレーターを返して終了します。
+```C++
+template <typename InputIterator, typename OutputIterator>
+OutputIterator copy(InputIterator first, InputIterator last, OutputIterator out);
+
+template <typename InputIterator, typename OutputIterator, typename P>
+OutputIterator copy_if(InputIterator first, InputIterator last, OutputIterator out, P predicate);
+```
+std::copy()関数は無条件にコピーをしますが、std::copy_if()関数はpredicateがtrueを返す場合のみコピーします。なお、コピー先のコンテナはあらかじめコピーするのに十分な数領域が確保されている必要があります。
